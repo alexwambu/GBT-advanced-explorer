@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GBTNetwork Explorer</title>
+  <style>
+    body { font-family: Arial; background: #f8f9fa; color: #333; text-align: center; padding: 40px; }
+    input, button { padding: 8px; margin: 5px; }
+    .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GBTNetwork Explorer</h1>
+    <p>RPC: https://gbtnetwork-1989.created.app | Chain ID: 9636</p>
+
+    <h3>Check Block</h3>
+    <input type="text" id="blockNum" placeholder="Enter block number">
+    <button onclick="fetchBlock()">Get Block</button>
+    <pre id="blockOut"></pre>
+
+    <h3>Check Transaction</h3>
+    <input type="text" id="txHash" placeholder="Enter tx hash">
+    <button onclick="fetchTx()">Get Transaction</button>
+    <pre id="txOut"></pre>
+
+    <h3>Token Info</h3>
+    <button onclick="fetchToken()">View Token</button>
+    <pre id="tokenOut"></pre>
+  </div>
+
+  <script>
+    async function fetchBlock() {
+      const num = document.getElementById('blockNum').value;
+      const res = await fetch(`/block/${num}`);
+      document.getElementById('blockOut').textContent = JSON.stringify(await res.json(), null, 2);
+    }
+    async function fetchTx() {
+      const hash = document.getElementById('txHash').value;
+      const res = await fetch(`/tx/${hash}`);
+      document.getElementById('txOut').textContent = JSON.stringify(await res.json(), null, 2);
+    }
+    async function fetchToken() {
+      const res = await fetch(`/token`);
+      document.getElementById('tokenOut').textContent = JSON.stringify(await res.json(), null, 2);
+    }
+  </script>
+</body>
+</html>
